@@ -175,12 +175,17 @@ class BackdropScaffold extends StatefulWidget {
   /// Will be called when [backLayer] have been revealed.
   final VoidCallback onBackLayerRevealed;
 
+  /// [BottomNavigationBar] for the [Scaffold]
+  ///
+  /// Defaults to `null` which leads the [Scaffold] without a [BottomNavigationBar].
+  final Widget bottomNavigationBar;
+
   /// Creates a backdrop scaffold to be used as a material widget.
   BackdropScaffold({
     this.controller,
     @Deprecated("Replace by use of BackdropAppBar. See BackdropAppBar.title."
         "This feature was deprecated after v0.2.17.")
-    this.title,
+        this.title,
     this.appBar,
     this.backLayer,
     this.frontLayer,
@@ -188,7 +193,7 @@ class BackdropScaffold extends StatefulWidget {
     this.subHeaderAlwaysActive = true,
     @Deprecated("Replace by use of BackdropAppBar. See BackdropAppBar.actions."
         "This feature was deprecated after v0.2.17.")
-    this.actions = const <Widget>[],
+        this.actions = const <Widget>[],
     this.headerHeight,
     this.frontLayerBorderRadius = const BorderRadius.only(
       topLeft: Radius.circular(16.0),
@@ -197,7 +202,7 @@ class BackdropScaffold extends StatefulWidget {
     @Deprecated("Replace by use of BackdropAppBar. See BackdropAppBar.leading"
         "and BackdropAppBar.automaticallyImplyLeading."
         "This feature was deprecated after v0.2.17.")
-    this.iconPosition = BackdropIconPosition.leading,
+        this.iconPosition = BackdropIconPosition.leading,
     this.stickyFrontLayer = false,
     this.animationCurve = Curves.easeInOut,
     this.resizeToAvoidBottomInset = true,
@@ -208,6 +213,7 @@ class BackdropScaffold extends StatefulWidget {
     this.floatingActionButtonAnimator,
     this.onBackLayerConcealed,
     this.onBackLayerRevealed,
+    this.bottomNavigationBar,
   });
 
   @override
@@ -289,7 +295,7 @@ class BackdropScaffoldState extends State<BackdropScaffold>
   /// Wether the back layer is concealed or not.
   bool get isBackLayerConcealed =>
       controller.status == AnimationStatus.completed ||
-          controller.status == AnimationStatus.forward;
+      controller.status == AnimationStatus.forward;
 
   /// Deprecated. Use [isBackLayerRevealed] instead.
   ///
@@ -301,7 +307,7 @@ class BackdropScaffoldState extends State<BackdropScaffold>
   /// Whether the back layer is revealed or not.
   bool get isBackLayerRevealed =>
       controller.status == AnimationStatus.dismissed ||
-          controller.status == AnimationStatus.reverse;
+      controller.status == AnimationStatus.reverse;
 
   /// Toggles the backdrop functionality.
   ///
@@ -356,8 +362,8 @@ class BackdropScaffoldState extends State<BackdropScaffold>
 
     // if subHeader then height of subHeader
     return ((_subHeaderKey.currentContext?.findRenderObject() as RenderBox)
-        ?.size
-        ?.height) ??
+            ?.size
+            ?.height) ??
         32.0;
   }
 
@@ -365,7 +371,7 @@ class BackdropScaffoldState extends State<BackdropScaffold>
       ((_backLayerKey.currentContext?.findRenderObject() as RenderBox)
           ?.size
           ?.height) ??
-          0.0;
+      0.0;
 
   Animation<RelativeRect> _getPanelAnimation(
       BuildContext context, BoxConstraints constraints) {
@@ -503,8 +509,10 @@ class BackdropScaffoldState extends State<BackdropScaffold>
             );
           },
         ),
-        floatingActionButton: this.widget.floatingActionButton,
+        floatingActionButton: widget.floatingActionButton,
         resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
+        bottomNavigationBar:
+            isBackLayerConcealed ? widget.bottomNavigationBar : null,
       ),
     );
   }
