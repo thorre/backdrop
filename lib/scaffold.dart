@@ -509,7 +509,8 @@ class BackdropScaffoldState extends State<BackdropScaffold>
             );
           },
         ),
-        floatingActionButton: widget.floatingActionButton,
+        floatingActionButton:
+            isBackLayerConcealed ? widget.floatingActionButton : null,
         resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
         bottomNavigationBar:
             isBackLayerConcealed ? widget.bottomNavigationBar : null,

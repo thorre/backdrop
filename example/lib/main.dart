@@ -26,6 +26,10 @@ class MyApp extends StatelessWidget {
         frontLayer: Center(
           child: Text("Front Layer"),
         ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.ac_unit),
+          onPressed: () {},
+        ),
       ),
     );
   }
